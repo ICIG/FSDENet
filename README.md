@@ -76,7 +76,46 @@ FGHFN
 cd FSDENet
 ```
 
+
+**Vaihingen**
+
+Only the TOP image tiles were used without the DSM and NDSM. And we utilized ID: 2, 4, 6, 8, 10, 12, 14, 16, 20, 22, 24, 27, 29, 31, 33, 35, 38 for testing, ID: 30 for validation, and the remaining 15 images for training.
+
+```
+python GeoSeg/tools/vaihingen_patch_split.py \
+--img-dir "data/vaihingen/train_images" \
+--mask-dir "data/vaihingen/train_masks" \
+--output-img-dir "data/vaihingen/train/images_1024" \
+--output-mask-dir "data/vaihingen/train/masks_1024" \
+--mode "train" --split-size 1024 --stride 512 
+```
+
+Generate the testing set.
+
+```
+python GeoSeg/tools/vaihingen_patch_split.py \
+--img-dir "data/vaihingen/test_images" \
+--mask-dir "data/vaihingen/test_masks_eroded" \
+--output-img-dir "data/vaihingen/test/images_1024" \
+--output-mask-dir "data/vaihingen/test/masks_1024" \
+--mode "val" --split-size 1024 --stride 1024 \
+--eroded
+```
+
+Generate the masks_1024_rgb (RGB format ground truth labels) for visualization.
+
+```
+python GeoSeg/tools/vaihingen_patch_split.py \
+--img-dir "data/vaihingen/test_images" \
+--mask-dir "data/vaihingen/test_masks" \
+--output-img-dir "data/vaihingen/test/images_1024" \
+--output-mask-dir "data/vaihingen/test/masks_1024_rgb" \
+--mode "val" --split-size 1024 --stride 1024 \
+--gt
+```
+
 **Potsdam**
+We utilized ID: 2_13, 2_14,3_13, 3_14, 4_13, 4_14, 4_15, 5_13, 5_14, 5_15, 6_13, 6_14, 6_15, 7_13 for testing, ID: 2_10 for validation, and the remaining 22 images (except image 7_10 with error annotations) for training.
 
 ```shell
 python GeoSeg/tools/potsdam_patch_split.py \
